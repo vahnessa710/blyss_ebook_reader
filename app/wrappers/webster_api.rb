@@ -22,5 +22,4 @@ class WebsterApi
 
     "Definition not available"
   end
-
 end

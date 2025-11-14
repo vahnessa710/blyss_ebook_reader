@@ -4,7 +4,7 @@ class ChapterParser
     /^CHAPTER\s+([IVXLCDM]+)\b/i,        # CHAPTER IV
     /^CHAPTER\s+(\d+)\b/i,               # CHAPTER 1
     /^Chapter\s+([A-Z]{2,})\b/i,         # Chapter Two
-    /^([IVXLCDM]+)\.?\s*[-–—]\s*/i,      # IV. - or IV — 
+    /^([IVXLCDM]+)\.?\s*[-–—]\s*/i,      # IV. - or IV —
     /^(\d+)\.?\s*[-–—]\s*/i,             # 1. - or 1 —
     /^[IVXLCDM]+$/i,                     # Standalone IV
     /^\d+$/                              # Standalone 1
@@ -23,16 +23,16 @@ class ChapterParser
 
   def parse
     lines = @text.gsub(/\r\n?/, "\n").split(/\n/)
-    
+
     chapters = []
     current_chapter = { title: "Prelude", content: [] }
-    
+
     lines.each do |line|
       if should_exclude?(line)
         current_chapter[:content] << line
       elsif chapter_title = detect_chapter_title(line)
         chapters << current_chapter if current_chapter[:content].any?
-        current_chapter = { 
+        current_chapter = {
           title: normalize_title(chapter_title),
           content: []
         }
@@ -42,7 +42,7 @@ class ChapterParser
     end
 
     chapters << current_chapter if current_chapter[:content].any?
-    
+
     chapters.each_with_index do |chapter, index|
       @book.chapters.create!(
         title: chapter[:title],
@@ -60,7 +60,7 @@ class ChapterParser
 
   def detect_chapter_title(line)
     return nil if should_exclude?(line)
-    
+
     CHAPTER_PATTERNS.each do |pattern|
       match = line.match(pattern)
       return match[1] if match && match[1]
@@ -76,16 +76,16 @@ class ChapterParser
     elsif title.match?(/^\d+$/)
       "Chapter #{number_to_word(title.to_i)}"
     else
-      title.strip.gsub(/^CHAPTER\s+/i, 'Chapter ')
+      title.strip.gsub(/^CHAPTER\s+/i, "Chapter ")
     end
   end
 
   def roman_to_word(roman)
     # Simple conversion for common numerals
     conversions = {
-      'I' => 'One', 'II' => 'Two', 'III' => 'Three', 'IV' => 'Four',
-      'V' => 'Five', 'VI' => 'Six', 'VII' => 'Seven', 'VIII' => 'Eight',
-      'IX' => 'Nine', 'X' => 'Ten', 'XI' => 'Eleven', 'XII' => 'Twelve'
+      "I" => "One", "II" => "Two", "III" => "Three", "IV" => "Four",
+      "V" => "Five", "VI" => "Six", "VII" => "Seven", "VIII" => "Eight",
+      "IX" => "Nine", "X" => "Ten", "XI" => "Eleven", "XII" => "Twelve"
     }
     conversions[roman] || "Chapter #{roman}"
   end
