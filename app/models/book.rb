@@ -28,7 +28,7 @@ class Book < ApplicationRecord
     def fetch_content_and_parse_chapters
         raw_content = GutendexApi.get_book_content(self.gutendex_id)
         return if raw_content.blank?
-        
+
         self.update(content: raw_content)
         parsed_text = ActionView::Base.full_sanitizer.sanitize(raw_content)
         ChapterParser.new(self, parsed_text).parse

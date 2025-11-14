@@ -7,7 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
       t.integer :theme, default: 0
-      t.integer :font_size , default: 14
+      t.integer :font_size, default: 14
 
       ## Recoverable
       t.string   :reset_password_token

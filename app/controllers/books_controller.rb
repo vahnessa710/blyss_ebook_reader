@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
     before_action :set_book_id, only: %i[show destroy download]
-    
+
     def index
         @books = current_user.books.all
     end
@@ -12,14 +12,14 @@ class BooksController < ApplicationController
         end
         @current_chapter = @resume_chapter || @book.chapters.order(:position).first
     end
-    
+
     def search_form; end
 
     def search
         @keywords  = params[:keywords]
         response = GutendexApi.get_book_by_keywords(@keywords)
         if response.success?
-            @books = response.parsed_response['results']
+            @books = response.parsed_response["results"]
             render :search_form
         else
             flash[:alert] = "Book not found or failed to fetch content."
@@ -29,7 +29,7 @@ class BooksController < ApplicationController
 
     def create
         gutendex_id = params.dig(:book, :gutendex_id)
-        
+
         if current_user.books.exists?(gutendex_id: gutendex_id)
             redirect_to search_form_books_path, alert: "Book is already in your library"
             return
@@ -66,11 +66,11 @@ class BooksController < ApplicationController
 
     def download
         response = HTTParty.get(@book.download_url)
-        
+
         send_data response.body,
                     filename: "#{@book.title.parameterize}.epub",
                     type: response.content_type,
-                    disposition: 'attachment'
+                    disposition: "attachment"
     end
 
     private

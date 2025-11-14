@@ -1,5 +1,4 @@
 class ChaptersController < ApplicationController
-  
   def show
     @book = Book.find(params[:book_id])
     @chapter = @book.chapters.find(params[:id])
@@ -13,7 +12,7 @@ class ChaptersController < ApplicationController
     respond_to do |format|
       format.html
       format.turbo_stream do
-        render turbo_stream: turbo_stream.update('search_results', partial: 'search_results')
+        render turbo_stream: turbo_stream.update("search_results", partial: "search_results")
       end
     end
   end
@@ -21,12 +20,12 @@ class ChaptersController < ApplicationController
   def update_progress
     @book = Book.find(params[:book_id])
     @chapter = @book.chapters.find(params[:id])
-    
+
     update_reading_progress(
       chapter_position: @chapter.position,
       progress_percentage: @chapter.progress_percentage
     )
-    
+
     head :ok
   end
 
@@ -34,14 +33,14 @@ class ChaptersController < ApplicationController
 
   def update_reading_progress(chapter_position:, progress_percentage:)
     progress = current_user.reading_progresses.find_or_initialize_by(book: @book)
-    
+
     progress.assign_attributes(
       chapter: @chapter,
       current_location: chapter_position,
       progress_percentage: progress_percentage,
       last_read_at: Time.current
     )
-    
+
     progress.save!
   end
 
@@ -50,7 +49,7 @@ class ChaptersController < ApplicationController
 
   # Split by paragraphs or sentences as needed
   paragraphs = content.split(/\n|<p>|<\/p>/).reject(&:blank?)
-  
+
   paragraphs.select do |paragraph|
     paragraph.downcase.include?(term.downcase)
   end

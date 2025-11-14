@@ -1,8 +1,8 @@
 class NotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [ :show, :edit, :update, :destroy ]
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  
+
   def index
     @user = User.find(params[:user_id])
     @notes = @user.notes

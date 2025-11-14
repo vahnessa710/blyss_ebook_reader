@@ -17,7 +17,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 gem "devise"
-gem "dotenv", groups: [:development, :test]
+gem "dotenv", groups: [ :development, :test ]
 gem "httparty"
 gem "foreman"
 gem "nokogiri"

@@ -24,12 +24,12 @@ class VocabulariesController < ApplicationController
       response = Dictionaryapi.get_words(@word)
       if response.success?
         data = response.parsed_response
-        entries = data.select { |entry| entry.is_a?(Hash) && entry['meanings']&.any? }
+        entries = data.select { |entry| entry.is_a?(Hash) && entry["meanings"]&.any? }
         if entries.any?
           @definitions = entries.flat_map do |entry|
-          entry['meanings'].flat_map { |meaning| meaning['definitions'].map { |d| d['definition'] } }
+          entry["meanings"].flat_map { |meaning| meaning["definitions"].map { |d| d["definition"] } }
         end
-        # Save to vocabulary list automatically if not already saved
+      # Save to vocabulary list automatically if not already saved
       unless current_user.vocabularies.exists?(word: @word)
         current_user.vocabularies.create(
         word: @word,
@@ -37,10 +37,10 @@ class VocabulariesController < ApplicationController
         )
       end
 
-      else
+        else
         flash[:alert] = "No definitions found for '#{@word}'."
         redirect_to search_form_vocabularies_path and return
-      end
+        end
       else
         flash[:alert] = "Failed to fetch definition for '#{@word}'."
         redirect_to search_form_vocabularies_path and return
@@ -76,6 +76,4 @@ class VocabulariesController < ApplicationController
     def record_not_found
       redirect_to vocabularies_path, alert: "That record doesn't exist!"
     end
-
-    
 end
