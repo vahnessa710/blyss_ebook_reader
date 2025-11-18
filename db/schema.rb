@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_113350) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_18_152006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,9 +41,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_113350) do
   create_table "notes", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
@@ -71,8 +71,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_113350) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "confirmed_at"
     t.string "confirmation_token"
+    t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.index ["email"], name: "index_users_on_email", unique: true

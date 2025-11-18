@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: ./bin/dev
+    command: bash -c "npm run build-css && bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000"
     volumes:
       - .:/rails
       - bundle_cache:/usr/local/bundle

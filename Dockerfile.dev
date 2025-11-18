@@ -13,7 +13,8 @@ RUN apt-get update -qq && \
   git \
   libpq-dev \
   nodejs \
-  npm && \
+  npm \
+  postgresql-client && \
   rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install bundler
