@@ -1,5 +1,5 @@
 module.exports = {
-  darkMode: 'class', // to activate class toggle
+  darkMode: "class", // to activate class toggle
   content: [
     "./app/views/**/*.{html,html.erb,erb}",
     "./app/helpers/**/*.rb",
