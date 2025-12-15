@@ -9,6 +9,10 @@ class User < ApplicationRecord
   has_many :reading_progresses
   has_many :notes, dependent: :destroy
 
+  def confirmation_required?
+    false  # Don't require confirmation for now
+  end
+
   THEMES = {
     light: 0,
     dark: 1
