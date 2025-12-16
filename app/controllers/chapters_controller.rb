@@ -5,16 +5,6 @@ class ChaptersController < ApplicationController
     @progress = current_user.reading_progresses.find_by(book: @book)
     @previous_chapter = @chapter.previous_chapter
     @next_chapter = @chapter.next_chapter
-    @search_term = params.dig(:q, :cont)
-      if @search_term.present?
-        @search_results = search_in_content(@chapter.content, @search_term)
-      end
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.update("search_results", partial: "search_results")
-      end
-    end
   end
 
   def update_progress
