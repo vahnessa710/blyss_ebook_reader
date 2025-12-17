@@ -1,6 +1,11 @@
 
 # Blyss Ebook Reader | 2025
 
+Live Demo (temporary):
+https://ebook-reader-cwzg.onrender.com/
+
+⚠️ Note: This deployment is hosted on Render free tier and will expire on January 15, 2026.
+
 Blyss is a desktop-focused ebook reader that lets you discover books via Gutendex API, track your reading progress, look up definitions, and take notes - all in one place.
 
 A modern, dockerized ebook reader application built with Ruby on Rails that allows authenticated users to search, read, and manage ebooks, with persistent reading progress, in-app dictionary, and note-taking features.
